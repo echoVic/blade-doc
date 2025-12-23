@@ -19,14 +19,14 @@
 - **[工具列表](reference/tool-list.md)** - 所有可用工具
 - **[CLI 命令](reference/cli-commands.md)** - 命令行参考
 
-## � 交流群
+## 💬 交流群
 
 添加小助手微信 **VIc-Forever**，备注「Blade」拉你进群。
 
-## �🔗 相关资源
+## 🔗 相关资源
 
 - [GitHub 仓库](https://github.com/echoVic/blade-code)
 - [NPM 包](https://www.npmjs.com/package/blade-code)
-- [问题反馈](https://github.com/echoVic/blade-code/issues)
+- [问题反馈](https://github.com/echoVic/blade-doc/issues)
 
 

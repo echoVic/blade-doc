@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer rounded square container -->
+    <rect x="32" y="32" width="192" height="192" rx="48" ry="48" stroke="#2C3E50" stroke-width="10" />
+
+    <!-- Terminal prompt ">" -->
+    <polyline points="96,104 128,128 96,152" stroke="#2C3E50" stroke-width="10" />
+
+    <!-- Blade-like diagonal cut -->
+    <path d="M144 88 L200 144" stroke="#4E60A9" stroke-width="10" />
+  </g>
+</svg>
