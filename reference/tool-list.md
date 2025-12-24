@@ -25,7 +25,7 @@
 | `Bash` | Execute | `command`、`cwd`、`env`、`background`、`timeout` | 执行命令，可后台运行并返回 `bash_id`（后台会话 ID），包含风险提示。 |
 | `BashOutput` | ReadOnly | `bash_id`、`filter`(正则，可选) | 读取后台命令的最新输出。 |
 | `KillShell` | Execute | `shell_id`、`signal` | 终止后台命令（使用 Bash 返回的后台 ID）。 |
-| `Skill` | Execute | `skill_name`、`input` | 预留的“技能”入口，当前用于系统提示中的占位行为。 |
+| `Skill` | Execute | `skill_name`、`args` | 动态调用自定义 Skill，根据 `SKILL.md` 定义自动执行。 |
 | `SlashCommand` | Execute | `command` | 在主对话中执行 Slash 命令（供系统调用，用户通常无需直接使用）。 |
 
 ## 网络
