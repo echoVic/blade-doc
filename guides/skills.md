@@ -8,6 +8,7 @@ Blade 的 Skills 系统与 [Claude Code Skills](https://code.claude.com/docs/en/
 
 Skills 本质上是结构化的 Prompt 和指令集合。它们被存储为文件（`SKILL.md`），Blade 会在启动时自动发现这些文件。
 
+- **官方技能自动安装**：首次启动时，Blade 会自动从官方仓库下载精选技能（如 `code-review`, `git-explorer` 等）到用户目录。
 - **AI 自动调用**：Blade 的 AI 模型会根据 Skill 的 `description` 自动判断何时调用某个 Skill。
 - **用户手动调用**：你可以通过 Slash 命令（如 `/skill-name`）直接触发特定的 Skill。
 - **权限控制**：你可以为每个 Skill 指定允许使用的工具（如只读权限），提高安全性。

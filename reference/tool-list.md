@@ -33,7 +33,7 @@
 | 名称 | 类型 | 参数 | 说明 |
 | --- | --- | --- | --- |
 | `WebFetch` | ReadOnly | `url`、`method`、`headers`、`body`、`trim` | 获取网页/接口内容，自动裁剪文本并提示编码。 |
-| `WebSearch` | ReadOnly | `query`、`site`、`language`、`region` | DuckDuckGo 搜索，返回结果摘要。 |
+| `WebSearch` | ReadOnly | `query`、`site`、`language`、`region` | 多引擎聚合搜索（Google, DuckDuckGo, Bing 等），智能回退，返回摘要。 |
 
 ## 任务与计划
 
