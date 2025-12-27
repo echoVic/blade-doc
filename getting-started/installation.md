@@ -29,8 +29,8 @@ npx blade "帮我分析代码"
 
 首次运行 `blade` 如未检测到模型配置，会自动弹出模型配置向导（`ModelConfigWizard`），依次填写：
 1. 配置名称
-2. Provider（`openai-compatible` / `anthropic`）
-3. Base URL
+2. Provider（`openai-compatible` / `anthropic` / `gemini` / `azure-openai`）
+3. Base URL（部分 Provider 可选）
 4. API Key（隐藏输入）
 5. 模型名称
 
@@ -140,9 +140,9 @@ rm -rf ~/.blade
 安装完成后，建议：
 
 1. [阅读快速开始指南](quick-start.md)
-2. [学习基础命令](../cli/commands.md)
-3. [了解配置设置](../cli/configuration.md)
-4. [查看常见问题](faq.md)
+2. [学习 CLI 命令](../reference/cli-commands.md)
+3. [了解配置系统](../configuration/config-system.md)
+4. [查看常见问题](../faq.md)
 
 ---
 

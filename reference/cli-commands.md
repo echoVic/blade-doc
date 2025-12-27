@@ -15,17 +15,56 @@ blade "帮我创建一个 README"
 - 无子命令时启动 Ink 界面。若未配置模型，会自动进入「模型配置向导」（`ModelConfigWizard`）。
 - 传入的 `message` 会在 UI 初始化后直接提交，无需手动回车。
 
-常用参数（当前实现已接入的部分）：
+**常用参数**
 
 | 参数 | 作用 |
 | --- | --- |
 | `--debug [filters]` | 打开调试日志，支持类别过滤（如 `--debug agent,ui` 或 `--debug "!chat,!loop"`）。 |
-| `--permission-mode <default\|autoEdit\|yolo\|plan>` / `--yolo` | 启动时设置权限模式（也会写入配置）。 |
-| `--resume [id]` | 恢复历史会话：`--resume` 交互选择，`--resume <id>` 直接加载。 |
-| `--max-turns <n>` | 控制触发询问的轮次阈值（0 = 禁用对话，-1 = 默认，上限 100）。 |
-| `--system-prompt` / `--append-system-prompt` | 替换或追加系统提示词（传入 Agent）。 |
+| `--permission-mode <mode>` | 权限模式：`default`（默认）、`autoEdit`（自动编辑）、`yolo`（全自动）、`plan`（规划模式）。 |
+| `--yolo` | `--permission-mode yolo` 的快捷方式，自动批准所有工具调用。 |
+| `--resume [id]` / `-r` | 恢复历史会话：`--resume` 交互选择，`--resume <id>` 直接加载。 |
+| `--continue` / `-c` | 继续最近一次对话。 |
+| `--max-turns <n>` | 控制对话轮次（0 = 禁用对话，-1 = 无限制，N > 0 = 限制轮次）。 |
+| `--system-prompt <text>` | 替换默认系统提示词。 |
+| `--append-system-prompt <text>` | 追加到默认系统提示词。 |
+| `--model <id>` | 当前会话使用的模型 ID。 |
 
-> 其他 CLI 选项（如 `--allowed-tools`、`--session-id`、`--ide` 等）虽在参数表中，但当前代码尚未消费它们。
+**输出与输入选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--output-format <format>` | 输出格式：`text`（默认）、`json`、`stream-json`。仅在 `--print` 模式下生效。 |
+| `--input-format <format>` | 输入格式：`text`（默认）、`stream-json`。 |
+| `--include-partial-messages` | 流式输出时包含部分消息块。 |
+
+**安全选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--allowed-tools <tools>` | 允许的工具白名单（空格或逗号分隔）。 |
+| `--disallowed-tools <tools>` | 禁止的工具黑名单（空格或逗号分隔）。 |
+| `--add-dir <paths>` | 额外允许工具访问的目录。 |
+
+**会话选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--session-id <id>` | 使用指定的会话 ID。 |
+| `--fork-session` | 恢复时创建新会话 ID（fork 模式）。 |
+
+**MCP 选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--mcp-config <paths>` | 从 JSON 文件或字符串加载 MCP 服务器配置。 |
+| `--strict-mcp-config` | 仅使用 `--mcp-config` 指定的 MCP 服务器。 |
+
+**集成选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--acp` | 以 ACP（Agent Client Protocol）模式运行，用于 IDE 集成。 |
+| `--ide` | 启动时自动连接 IDE（需配合 IDE 插件）。 |
 
 ## 🖨️ 打印模式 `-p / --print`
 
@@ -61,7 +100,7 @@ echo "请总结这段文字" | blade -p --output-format json
 ## 🧭 交互界面要点
 
 - `/` 开头触发 Slash 命令补全，`@` 开头触发文件路径补全（自动读取并注入上下文，见「@ 文件提及」章节）。
-- 快捷键：`Ctrl+C / Ctrl+D` 终止任务或退出；`Ctrl+L` 清屏；`Esc` 关闭建议/中断执行；`Shift+Tab` 在 `default → autoEdit → plan` 间循环。
+- 快捷键：`Ctrl+C / Ctrl+D` 终止任务或退出；`Ctrl+L` 清屏；`Ctrl+T` 展开/折叠思维链；`Esc` 关闭建议/中断执行；`Shift+Tab` 在 `default → autoEdit → plan` 间循环。
 - 没有模型配置时自动进入模型向导；若解析配置失败会在对话区显示错误。
 
 ## 🔁 示例

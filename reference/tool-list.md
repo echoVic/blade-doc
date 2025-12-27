@@ -6,10 +6,12 @@
 
 | 名称 | 类型 | 主要参数 | 说明 |
 | --- | --- | --- | --- |
-| `Read` | ReadOnly | `file_path`（绝对路径，可选 `offset/limit/encoding`） | 读取文本/图片/PDF/ipynb，默认最多 2000 行，返回带行号内容。 |
-| `Write` | Write | `file_path`、`content`、`encoding`、`mode`、`mkdirs` | 写入或创建文件，支持备份/权限检查/目录自动创建。 |
+| `Read` | ReadOnly | `file_path`（绝对路径，可选 `offset/limit/encoding`） | 读取文本/图片/PDF/ipynb，默认最多 2000 行，返回带行号内容。支持 `encoding: base64` 读取二进制文件。 |
+| `Write` | Write | `file_path`、`content`、`encoding`、`mode`、`mkdirs` | 写入或创建文件，支持备份/权限检查/目录自动创建。支持 `encoding: base64` 写入二进制数据。 |
 | `Edit` | Write | `file_path`、`old_string`、`new_string`、`pattern`、`max_replacements` | 按字符串或正则替换，支持回滚、预览与并发文件锁。 |
 | `NotebookEdit` | Write | `file_path`、`content` | 针对 `.ipynb` 的写入，保持 JSON 结构。 |
+
+> **Base64 编解码**：Read 和 Write 工具通过 `encoding: 'base64'` 参数支持二进制文件的读写。Read 会自动检测二进制文件并以 Base64 编码返回内容。
 
 ## 搜索
 

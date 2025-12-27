@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.0.40] - 2025-12-27
+
+### ✨ 新功能
+
+- **多模型提供商支持**：添加对 Anthropic、Google Gemini 和 Azure OpenAI 的原生支持 (33ec933)
+- 添加完整的 Base64 编解码工具 (cab5a2c)
+
+### 🐛 问题修复
+
+- 修复 CustomTextInput 快捷键处理问题 (cf1e447)
+
+### 📝 文档更新
+
+- 添加思维链支持文档及模型配置说明 (3607d0d)
+
+### ✅ 测试相关
+
+- 添加大量单元测试和测试工具 (0c9a6ac)
+
+
 ## [0.0.39] - 2025-12-26
 
 ### ✨ 新功能
