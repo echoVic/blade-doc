@@ -29,10 +29,12 @@ npx blade "帮我分析代码"
 
 首次运行 `blade` 如未检测到模型配置，会自动弹出模型配置向导（`ModelConfigWizard`），依次填写：
 1. 配置名称
-2. Provider（`openai-compatible` / `anthropic` / `gemini` / `azure-openai`）
+2. Provider（`openai-compatible` / `anthropic` / `gemini` / `antigravity` / `copilot` / `azure-openai` / `gpt-openai-platform`）
 3. Base URL（部分 Provider 可选）
 4. API Key（隐藏输入）
 5. 模型名称
+
+> `antigravity` / `copilot` 使用 OAuth 登录：先执行 `/login`，向导会跳过 API Key 步骤并使用固定 Base URL。
 
 向导完成后会写入 `~/.blade/config.json`，后续可在 UI 内随时输入 `/model add` 新增或编辑。
 
@@ -100,12 +102,17 @@ cat .blade/config.json
 echo $QWEN_API_KEY
 ```
 
-支持的 IDE：
+支持的 IDE（插件支持）：
 - Visual Studio Code
-- WebStorm/IntelliJ IDEA
-- Vim/Neovim
-- Emacs
+- VS Code Insiders
 - Cursor
+
+支持 ACP 的 IDE（需 ACP 客户端/插件）：
+- Zed
+- JetBrains 系列
+- Neovim
+
+ACP 使用方式见 [ACP 集成](../guides/acp.md)。
 
 ## 🔄 更新和卸载
 

@@ -21,15 +21,19 @@ Blade 使用双文件配置体系：`config.json`（基础配置）和 `settings
 
 **模型与连接**
 
-Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gemini、Azure OpenAI 等。
+Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gemini、Azure OpenAI，以及 OAuth 方式的 Antigravity/Copilot。
 
 **支持的 Provider**
 
 - `openai-compatible`: OpenAI 兼容接口（DeepSeek, Ollama, Qwen 等）
 - `anthropic`: Anthropic Claude
 - `gemini`: Google Gemini
+- `antigravity`: Google Antigravity（OAuth 登录，统一网关访问 Claude/Gemini/GPT-OSS）
+- `copilot`: GitHub Copilot（OAuth 登录，访问 GPT/Claude/Gemini 等）
 - `azure-openai`: Azure OpenAI Service
 - `gpt-openai-platform`: 字节跳动内部 GPT 平台
+
+> `antigravity` / `copilot` 使用 OAuth：先执行 `/login`，再用 `/model add` 添加模型配置；`baseUrl` 为固定端点，`apiKey` 可留空。
 
 **模型配置示例**
 
@@ -77,6 +81,7 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
 | `supportsThinking` | 是否支持思维链 (CoT) | 用于 DeepSeek R1 等推理模型 |
 | `thinkingBudget` | 思维链 Token 预算 | 仅当 `supportsThinking` 为 true 时生效 |
 | `apiVersion` | API 版本 | Azure OpenAI / GPT Platform 必填 |
+| `projectId` | 项目 ID | Antigravity 可选（自动获取后可写入） |
 
 **通用参数**
 
@@ -88,13 +93,12 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
 | `stream` | 是否请求流式输出 | `true` |
 | `topP` / `topK` | 采样参数 | `0.9` / `50` |
 | `timeout` | LLM 请求超时（ms） | `180000` |
-| `theme` / `language` / `fontSize` | UI 主题/语言/字号 | `GitHub` / `zh-CN` / `14` |
+| `theme` / `language` / `fontSize` | UI 主题/语言/字号 | `github` / `zh-CN` / `14` |
 | `debug` | `false` / `true` / `"agent,ui"` 形式的过滤字符串 | `false` |
-| `mcpEnabled` | 是否启用 MCP | `false` |
+| `mcpEnabled` | 是否启用 MCP | `false`（当前未作为硬开关） |
 | `mcpServers` | MCP 服务器配置字典 | `{}` |
-| `enabledMcpjsonServers` / `disabledMcpjsonServers` | `.mcp.json` 的批准/拒绝记录 | `[]` |
 
-> `fallbackModel`、`allowedTools` 等字段仅存在于运行时类型中，当前代码未消费这些字段。
+> `fallbackModel`、`allowedTools`、`settingSources` 等字段仅存在于运行时类型中，当前未接入主要流程。
 
 ## settings.json / settings.local.json（行为配置）
 
@@ -136,7 +140,7 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
       "model": "qwen-max"
     }
   ],
-  "theme": "GitHub",
+  "theme": "github",
   "language": "zh-CN",
   "debug": false
 }
@@ -157,9 +161,15 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
     ]
   },
   "hooks": {
-    "PostToolUse": {
-      "Write": "npx prettier --write {file_path}"
-    }
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": { "tools": "Write", "paths": "**/*.ts" },
+        "hooks": [
+          { "type": "command", "command": "npx prettier --write {{file_path}}" }
+        ]
+      }
+    ]
   },
   "env": {
     "NODE_ENV": "development"

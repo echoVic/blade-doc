@@ -7,9 +7,9 @@
 | 名称 | 类型 | 主要参数 | 说明 |
 | --- | --- | --- | --- |
 | `Read` | ReadOnly | `file_path`（绝对路径，可选 `offset/limit/encoding`） | 读取文本/图片/PDF/ipynb，默认最多 2000 行，返回带行号内容。支持 `encoding: base64` 读取二进制文件。 |
-| `Write` | Write | `file_path`、`content`、`encoding`、`mode`、`mkdirs` | 写入或创建文件，支持备份/权限检查/目录自动创建。支持 `encoding: base64` 写入二进制数据。 |
-| `Edit` | Write | `file_path`、`old_string`、`new_string`、`pattern`、`max_replacements` | 按字符串或正则替换，支持回滚、预览与并发文件锁。 |
-| `NotebookEdit` | Write | `file_path`、`content` | 针对 `.ipynb` 的写入，保持 JSON 结构。 |
+| `Write` | Write | `file_path`、`content`、`encoding`、`create_directories` | 写入或创建文件；若文件已存在，必须先使用 Read 读取。支持二进制写入（`encoding: base64`）。 |
+| `Edit` | Write | `file_path`、`old_string`、`new_string`、`replace_all` | 基于字符串的精确替换，`replace_all` 控制是否全量替换。 |
+| `NotebookEdit` | Write | `notebook_path`、`cell_id`、`new_source`、`cell_type`、`edit_mode` | 按 cell ID 替换/插入/删除单元格（`edit_mode`: replace/insert/delete）。 |
 
 > **Base64 编解码**：Read 和 Write 工具通过 `encoding: 'base64'` 参数支持二进制文件的读写。Read 会自动检测二进制文件并以 Base64 编码返回内容。
 
@@ -17,33 +17,33 @@
 
 | 名称 | 类型 | 参数 | 说明 |
 | --- | --- | --- | --- |
-| `Glob` | ReadOnly | `pattern`、`cwd`、`ignore`、`limit` | 使用 fast-glob 查找文件，内置忽略常见目录。 |
-| `Grep` | ReadOnly | `pattern`、`path`、`glob`、`context` 等 | 基于 ripgrep，支持多文件内容搜索、上下文行、大小写/正则开关。 |
+| `Glob` | ReadOnly | `pattern`、`path`、`max_results`、`include_directories`、`case_sensitive` | 使用 fast-glob 查找文件，遵循 `.gitignore`。 |
+| `Grep` | ReadOnly | `pattern`、`path`、`glob`、`type`、`output_mode`、`-i/-n/-A/-B/-C`、`head_limit`、`offset`、`multiline` | 基于 ripgrep，支持正则、上下文与多输出模式。 |
 
 ## Shell 与执行
 
 | 名称 | 类型 | 参数 | 说明 |
 | --- | --- | --- | --- |
-| `Bash` | Execute | `command`、`cwd`、`env`、`background`、`timeout` | 执行命令，可后台运行并返回 `bash_id`（后台会话 ID），包含风险提示。 |
+| `Bash` | Execute | `command`、`cwd`、`env`、`timeout`、`run_in_background` | 执行命令；后台运行会返回 `bash_id`（后台会话 ID）。 |
 | `BashOutput` | ReadOnly | `bash_id`、`filter`(正则，可选) | 读取后台命令的最新输出。 |
-| `KillShell` | Execute | `shell_id`、`signal` | 终止后台命令（使用 Bash 返回的后台 ID）。 |
-| `Skill` | Execute | `skill_name`、`args` | 动态调用自定义 Skill，根据 `SKILL.md` 定义自动执行。 |
-| `SlashCommand` | Execute | `command` | 在主对话中执行 Slash 命令（供系统调用，用户通常无需直接使用）。 |
+| `KillShell` | Execute | `shell_id` | 终止后台命令（使用 Bash 返回的后台 ID）。 |
+| `Skill` | Execute | `skill`、`args` | 动态调用自定义 Skill，根据 `SKILL.md` 定义执行。 |
+| `SlashCommand` | Execute | `command`、`arguments` | 执行自定义 Slash 命令（仅限自定义命令）。 |
 
 ## 网络
 
 | 名称 | 类型 | 参数 | 说明 |
 | --- | --- | --- | --- |
-| `WebFetch` | ReadOnly | `url`、`method`、`headers`、`body`、`trim` | 获取网页/接口内容，自动裁剪文本并提示编码。 |
-| `WebSearch` | ReadOnly | `query`、`site`、`language`、`region` | 多引擎聚合搜索（Google, DuckDuckGo, Bing 等），智能回退，返回摘要。 |
+| `WebFetch` | ReadOnly | `url`、`method`、`headers`、`body`、`timeout`、`follow_redirects`、`max_redirects`、`return_headers` | 获取网页/接口内容并返回响应数据。 |
+| `WebSearch` | ReadOnly | `query`、`allowed_domains`、`blocked_domains` | 多提供商聚合搜索，自动回退并返回摘要结果。 |
 
 ## 任务与计划
 
 | 名称 | 类型 | 说明 |
 | --- | --- | --- |
-| `Task` | ReadOnly | 启动子 Agent（使用 `.blade/agents` / `~/.blade/agents` 中的配置），`subagent_type` 决定工具集。 |
-| `TodoWrite` | ReadOnly | 管理会话内 TODO（持久化到 `<configDir>/todos/<session>-agent-<session>.json`，默认 `~/.blade/todos`），返回完整列表。 |
-| `EnterPlanMode` / `ExitPlanMode` | ReadOnly | 进入/退出 Plan 模式并触发用户确认。 |
+| `Task` | ReadOnly | 启动子 Agent（使用 `.blade/agents` / `~/.blade/agents` 中的配置），参数 `subagent_type`、`description`、`prompt`。 |
+| `TodoWrite` | ReadOnly | 管理会话内 TODO（参数 `todos`，包含 `content` / `activeForm` / `status` / `priority`）。 |
+| `EnterPlanMode` / `ExitPlanMode` | ReadOnly | 进入/退出 Plan 模式并触发用户确认；`ExitPlanMode` 需要 `plan` 文本。 |
 
 ## MCP 工具
 

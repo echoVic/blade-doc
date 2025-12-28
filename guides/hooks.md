@@ -106,7 +106,7 @@ Blade 支持 11 种 Hook 事件：
   "PreToolUse": [
     {
       "matcher": {
-        "tools": "Edit|Write|Delete",
+        "tools": "Edit|Write|NotebookEdit",
         "paths": "**/.env*|**/credentials.json"
       },
       "hooks": [

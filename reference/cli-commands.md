@@ -24,10 +24,11 @@ blade "帮我创建一个 README"
 | `--yolo` | `--permission-mode yolo` 的快捷方式，自动批准所有工具调用。 |
 | `--resume [id]` / `-r` | 恢复历史会话：`--resume` 交互选择，`--resume <id>` 直接加载。 |
 | `--continue` / `-c` | 继续最近一次对话。 |
-| `--max-turns <n>` | 控制对话轮次（0 = 禁用对话，-1 = 无限制，N > 0 = 限制轮次）。 |
+| `--max-turns <n>` | 控制对话轮次（0 = 禁用对话，-1 = 无限但受安全上限 100 轮保护，N > 0 = 限制轮次）。 |
 | `--system-prompt <text>` | 替换默认系统提示词。 |
 | `--append-system-prompt <text>` | 追加到默认系统提示词。 |
 | `--model <id>` | 当前会话使用的模型 ID。 |
+| `--fallback-model <id>` | 指定备用模型（当前仅解析参数，尚未接入自动切换）。 |
 
 **输出与输入选项**
 
@@ -36,6 +37,7 @@ blade "帮我创建一个 README"
 | `--output-format <format>` | 输出格式：`text`（默认）、`json`、`stream-json`。仅在 `--print` 模式下生效。 |
 | `--input-format <format>` | 输入格式：`text`（默认）、`stream-json`。 |
 | `--include-partial-messages` | 流式输出时包含部分消息块。 |
+| `--replay-user-messages` | 重放 stdin 中的用户消息（当前仅解析参数，尚未接入输出管线）。 |
 
 **安全选项**
 
@@ -59,12 +61,20 @@ blade "帮我创建一个 README"
 | `--mcp-config <paths>` | 从 JSON 文件或字符串加载 MCP 服务器配置。 |
 | `--strict-mcp-config` | 仅使用 `--mcp-config` 指定的 MCP 服务器。 |
 
+**配置选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--settings <path|json>` | 指定 settings JSON 路径或字符串（当前仅解析参数，尚未接入）。 |
+| `--agents <json>` | 自定义 Agent 配置（当前仅解析参数，尚未接入）。 |
+| `--setting-sources <list>` | 指定配置来源列表（当前仅解析参数，尚未接入）。 |
+
 **集成选项**
 
 | 参数 | 作用 |
 | --- | --- |
 | `--acp` | 以 ACP（Agent Client Protocol）模式运行，用于 IDE 集成。 |
-| `--ide` | 启动时自动连接 IDE（需配合 IDE 插件）。 |
+| `--ide` | 启动时自动连接 IDE（当前仅解析参数，未自动连接）。 |
 
 ## 🖨️ 打印模式 `-p / --print`
 
@@ -91,11 +101,11 @@ echo "请总结这段文字" | blade -p --output-format json
 
 | 命令 | 用法 | 说明 |
 | --- | --- | --- |
-| `mcp list` / `mcp ls` | `blade mcp list` | 列出 `.blade/config.json` 中的服务器并尝试连接，完成后自动断开。 |
-| `mcp add <name> <cmdOrUrl> [args…]` | `blade mcp add github -- npx -y @modelcontextprotocol/server-github` | 支持 `--transport stdio|http|sse`、`--env KEY=VAL`、`--header "K: V"`、`--timeout <ms>`。 |
-| `mcp remove <name>` / `rm` | `blade mcp remove github` | 从项目配置移除服务器。 |
+| `mcp list` / `mcp ls` | `blade mcp list` | 列出已加载的 MCP 服务器（全局 + 项目）并尝试连接，完成后自动断开。 |
+| `mcp add <name> <cmdOrUrl> [args…]` | `blade mcp add github -- npx -y @modelcontextprotocol/server-github` | 支持 `--transport stdio|http|sse`、`--env KEY=VAL`、`--header "K: V"`、`--timeout <ms>`、`--global`。 |
+| `mcp remove <name>` / `rm` | `blade mcp remove github` | 从项目配置移除服务器，支持 `--global` 删除全局配置。 |
 | `mcp get <name>` | `blade mcp get github` | 打印单个服务器配置 JSON。 |
-| `mcp add-json <name> '<json>'` | `blade mcp add-json api '{"type":"http","url":"..."}'` | 直接传入 JSON 串。 |
+| `mcp add-json <name> '<json>'` | `blade mcp add-json api '{"type":"http","url":"..."}'` | 直接传入 JSON 串，支持 `--global`。 |
 
 ## 🧭 交互界面要点
 
@@ -116,4 +126,4 @@ blade --permission-mode plan
 blade --resume 2024-12-foo-session
 ```
 
-更多用法见其他章节（工具列表、Slash 命令、Plan 模式等）。***
+更多用法见其他章节（工具列表、Slash 命令、Plan 模式等）。
