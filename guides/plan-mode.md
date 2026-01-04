@@ -35,7 +35,7 @@ Plan 模式仅允许 `ReadOnly` 工具：
 
 在 Blade Code 主界面中，**按 Shift+Tab** 循环切换权限模式：
 
-**DEFAULT → AUTO_EDIT → PLAN → DEFAULT → ...**
+**DEFAULT → AUTO_EDIT → PLAN → SPEC → DEFAULT → ...**
 
 当切换到 Plan 模式时，界面顶部会显示蓝色指示器：
 
@@ -164,7 +164,7 @@ AI: 好的，我会修改方案以支持 OAuth 2.0...
 
 ## 手动退出 Plan 模式
 
-如果您想在不提交方案的情况下退出 Plan 模式，只需**继续按 Shift+Tab** 切换到其他权限模式（DEFAULT 或 AUTO_EDIT）。
+如果您想在不提交方案的情况下退出 Plan 模式，只需**继续按 Shift+Tab** 切换到其他权限模式（SPEC、DEFAULT 或 AUTO_EDIT）。
 
 ## 使用场景
 
@@ -186,7 +186,7 @@ AI: 好的，我会修改方案以支持 OAuth 2.0...
 
 ### Plan 模式与权限系统的集成
 
-Plan 模式是 `PermissionMode` 枚举的一种，与其他权限模式（DEFAULT、AUTO_EDIT、YOLO）处于同一层级：
+Plan 模式是 `PermissionMode` 枚举的一种，与其他权限模式（DEFAULT、AUTO_EDIT、YOLO、SPEC）处于同一层级：
 
 ```typescript
 export enum PermissionMode {
@@ -194,6 +194,7 @@ export enum PermissionMode {
   AUTO_EDIT = 'autoEdit', // 自动编辑模式
   YOLO = 'yolo',          // 危险模式
   PLAN = 'plan',          // Plan 模式
+  SPEC = 'spec',          // Spec 模式（规格驱动开发）
 }
 ```
 
@@ -264,8 +265,22 @@ A: 当前的 TODO 系统采用「写入即同步」的设计，只保留 TodoWri
 
 因此，如果只是想查看任务列表，不需要再调用新工具，直接参考最近一次 TodoWrite 的输出即可。
 
+## Plan 模式与 Spec 模式的区别
+
+| 特性 | Plan Mode | Spec Mode |
+|------|-----------|-----------|
+| 复杂度 | 简单任务 | 复杂功能 |
+| 文档 | 单个计划文件 | 多个结构化文档 |
+| 阶段 | 单阶段 | 六阶段工作流 |
+| 持久化 | 临时 | 永久归档 |
+| 任务追踪 | 无 | 依赖管理、进度显示 |
+| 适用场景 | Bug 修复、小改动 | 新功能、重构 |
+| 状态栏 | `‖ plan mode on` | `📋 spec: tasks 3/5` |
+
+如果您需要更结构化的开发流程，请参考 [Spec 模式指南](./spec-mode.md)。
+
 ## 参考资源
 
 - [配置系统文档](../configuration/config-system.md)
 - [工具系统文档](../reference/tool-list.md)
-- [开发者实现文档](../../development/planning/plan-mode-implementation.md)
+- [Spec 模式指南](./spec-mode.md)

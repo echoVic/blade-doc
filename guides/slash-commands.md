@@ -11,22 +11,18 @@ Slash 命令由 `src/slash-commands` 提供，输入 `/` 触发建议，`Tab` �
 | `/exit` | 退出程序 | 同 `Ctrl+C`。 |
 | `/version` | 显示版本信息 | 从 `package.json` 读取。 |
 | `/status` | 显示当前项目/配置概览 | 检查 `BLADE.md`、项目类型等。 |
-| `/context` | 显示上下文使用情况 | 展示当前会话 token 使用与模型窗口。 |
-| `/init` | 分析项目生成或改进 `BLADE.md` | 调用 Agent 读取代码并生成或提出建议。 |
+| `/context` / `/cost` | 显示上下文/成本示例信息 | 当前为静态示例，便于占位。 |
+| `/init` | 分析项目生成或改进 `BLADE.md` | 调用 Agent 读取代码并写入 `BLADE.md`。 |
 | `/model [add|remove]` | 管理模型配置 | 无参时弹出模型选择器；`add` 打开向导；`remove <name>` 删除匹配名称。 |
 | `/theme` | 打开主题选择器 | 立即应用并写回配置。 |
 | `/permissions` | 打开权限管理器 | 操作 `.blade/settings.local.json`。 |
-| `/mcp` | 显示 MCP 状态 | 支持 `/mcp tools` 与 `/mcp <server>`。 |
+| `/mcp` | 显示 MCP 状态 | 由内置命令输出当前配置。 |
 | `/agents [list|create|help]` | 管理子代理配置 | 读取 `.blade/agents` / `~/.blade/agents`；`list` 文本列出，`create` 打开创建向导。 |
 | `/resume` | 打开会话选择器 | 可恢复历史对话。 |
 | `/compact` | 手动触发上下文压缩 | 调用 UI 压缩逻辑。 |
 | `/skills` | 打开 Skills 管理面板 | 查看和管理所有可用 Skills。 |
-| `/skill-creator` | 交互式创建新 Skill | 内置 Skill（可用户调用）。 |
-| `/git [status|log|diff|review|commit|pre-commit]` | Git 操作集成。`commit` 会生成并提交；`pre-commit` 仅生成消息。 | 需在 Git 仓库中使用。 |
-| `/hooks [add|status|enable|disable|list]` | Hooks 管理 | 当前会话启用/禁用或查看配置。 |
-| `/ide [status|connect|install]` | IDE 集成管理 | 查看状态、连接或安装 VS Code 插件。 |
-| `/login [copilot|gemini]` | OAuth 登录 | Antigravity（默认）或 Copilot。 |
-| `/logout [copilot|all]` | OAuth 登出 | 退出当前或所有登录。 |
+| `/skill-creator` | 交互式创建新 Skill | 引导用户生成 SKILL.md。 |
+| `/git [status|log|diff|review|commit]` | Git 操作集成。`commit` (或 pre-commit) 会分析暂存区变动，调用 AI 生成符合历史风格的 commit message。 | 需在 Git 仓库中使用。 |
 
 ## 自定义 Slash 命令
 
@@ -58,12 +54,12 @@ argument-hint: "[参数提示]"
 这里是命令的内容。支持以下功能：
 
 1. **参数插值**：使用 `$1`, `$2` 等占位符引用用户输入的参数。
-2. **Bash 嵌入**：使用 `!` + 反引号执行 shell 命令。
+2. **Bash 嵌入**：使用反引号执行 shell 命令。
 
 示例：
 请帮我重构 `$1` 文件。
 下面是相关的测试结果：
-!`npm test $1`
+\`npm test $1\`
 ```
 
 ### 配置选项 (Frontmatter)
@@ -97,5 +93,6 @@ argument-hint: "[参数提示]"
 
 ## 注意事项
 
+- 部分命令（如 `/config`）当前为占位信息，仅展示示例文本。
 - Slash 命令执行前会确保配置 Store 已初始化；如配置缺失会在对话区提示错误。
 - `/git` 系列依赖本地 Git 状态，遇到缺失或异常会返回错误消息而非中断程序。

@@ -44,7 +44,10 @@ A: 使用镜像源：`npm install -g blade-code --registry=https://registry.npmm
 ## 其他
 
 **Q: 权限模式如何工作？**  
-A: `default`：只读工具自动通过；`autoEdit`：额外放行写入；`plan`：拒绝所有修改，仅允许只读；`yolo`：全部放行。详情见权限章节。
+A: `default`：只读工具自动通过；`autoEdit`：额外放行写入；`plan`：拒绝所有修改，仅允许只读；`spec`：规格驱动开发模式，支持结构化的需求分析和任务管理；`yolo`：全部放行。详情见权限章节。
+
+**Q: Plan 模式和 Spec 模式有什么区别？**  
+A: Plan 模式适合简单任务的调研和方案制定，只允许只读工具。Spec 模式适合复杂功能开发，提供六阶段工作流（init → requirements → design → tasks → implementation → done），支持结构化文档和任务追踪。详情见 [Plan 模式](guides/plan-mode.md) 和 [Spec 模式](guides/spec-mode.md)。
 
 **Q: 配置文件没写完或格式错误怎么办？**  
 A: 未找到有效模型会触发向导；解析失败会在对话区提示错误。修正 JSON 后重启即可。

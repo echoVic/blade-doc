@@ -37,8 +37,9 @@
 | `autoEdit` | 只读 + Write 类工具（Edit/Write/NotebookEdit） | - | 适合频繁改文件。 |
 | `yolo` | 所有工具 | - | 跳过所有确认，需自担风险。 |
 | `plan` | 只读工具 | 其他全部拒绝 | 适合调研/方案阶段，必须用 ExitPlanMode 提交方案后再切换模式。 |
+| `spec` | 只读工具 + Spec 相关工具 | - | 规格驱动开发模式，支持结构化的需求分析和任务管理。Spec 工具（UpdateSpec、AddTask 等）自动允许。 |
 
-> UI 中 `Shift+Tab` 循环 `default → autoEdit → plan`，`yolo` 需通过 CLI/配置设置。
+> UI 中 `Shift+Tab` 循环 `default → autoEdit → plan → spec`，`yolo` 需通过 CLI/配置设置。
 
 ## 确认与持久化
 

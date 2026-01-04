@@ -20,7 +20,7 @@ blade "帮我创建一个 README"
 | 参数 | 作用 |
 | --- | --- |
 | `--debug [filters]` | 打开调试日志，支持类别过滤（如 `--debug agent,ui` 或 `--debug "!chat,!loop"`）。 |
-| `--permission-mode <mode>` | 权限模式：`default`（默认）、`autoEdit`（自动编辑）、`yolo`（全自动）、`plan`（规划模式）。 |
+| `--permission-mode <mode>` | 权限模式：`default`（默认）、`autoEdit`（自动编辑）、`yolo`（全自动）、`plan`（规划模式）、`spec`（规格驱动开发模式）。 |
 | `--yolo` | `--permission-mode yolo` 的快捷方式，自动批准所有工具调用。 |
 | `--resume [id]` / `-r` | 恢复历史会话：`--resume` 交互选择，`--resume <id>` 直接加载。 |
 | `--continue` / `-c` | 继续最近一次对话。 |
@@ -110,8 +110,20 @@ echo "请总结这段文字" | blade -p --output-format json
 ## 🧭 交互界面要点
 
 - `/` 开头触发 Slash 命令补全，`@` 开头触发文件路径补全（自动读取并注入上下文，见「@ 文件提及」章节）。
-- 快捷键：`Ctrl+C / Ctrl+D` 终止任务或退出；`Ctrl+L` 清屏；`Ctrl+T` 展开/折叠思维链；`Esc` 关闭建议/中断执行；`Shift+Tab` 在 `default → autoEdit → plan` 间循环。
+- 快捷键：`Ctrl+C / Ctrl+D` 终止任务或退出；`Ctrl+L` 清屏；`Ctrl+T` 展开/折叠思维链；`Esc` 关闭建议/中断执行；`Shift+Tab` 在 `default → autoEdit → plan → spec` 间循环。
 - 没有模型配置时自动进入模型向导；若解析配置失败会在对话区显示错误。
+
+## 📋 权限模式说明
+
+Blade 支持五种权限模式，通过 `--permission-mode` 参数或 `Shift+Tab` 快捷键切换：
+
+| 模式 | 说明 |
+| --- | --- |
+| `default` | 默认模式，只读工具自动允许，写入和执行工具需要确认。 |
+| `autoEdit` | 自动编辑模式，写入工具自动允许，执行工具需要确认。 |
+| `yolo` | 全自动模式，所有工具自动允许（危险）。 |
+| `plan` | 规划模式，仅允许只读工具，用于调研和方案制定。 |
+| `spec` | 规格驱动开发模式，支持结构化的需求分析和任务管理。 |
 
 ## 🔁 示例
 
@@ -122,8 +134,11 @@ git diff | blade --print --append-system-prompt "请给出代码审查建议"
 # 启用 Plan 模式启动 UI
 blade --permission-mode plan
 
+# 启用 Spec 模式启动 UI
+blade --permission-mode spec
+
 # 恢复历史会话并继续对话
 blade --resume 2024-12-foo-session
 ```
 
-更多用法见其他章节（工具列表、Slash 命令、Plan 模式等）。
+更多用法见其他章节（工具列表、Slash 命令、Plan 模式、Spec 模式等）。
