@@ -7,34 +7,41 @@
 | 产品 | 开发者 | 开源协议 | 默认模型 | 定位 |
 |------|--------|----------|----------|------|
 | **Blade Code** | 社区 | MIT | 多模型支持 | 多模型、可扩展的 AI 编码助手 |
-| **Claude Code** | Anthropic | 闭源 | Claude | Anthropic 官方 CLI 工具 |
-| **Gemini CLI** | Google | Apache 2.0 | Gemini 2.5 Pro | Google 官方终端 AI Agent |
-| **Codex CLI** | OpenAI | Apache 2.0 | GPT-4o | OpenAI 官方编码 Agent |
-| **OpenCode** | Anomaly | MIT | 多模型支持 | 开源 AI 编码 Agent |
+| **Claude Code** | Anthropic | 闭源 | Claude | Anthropic 官方 CLI 工具，企业级 |
+| **Gemini CLI** | Google | Apache 2.0 | Gemini 2.5 Pro | Google 官方终端 AI Agent，开源 |
+| **Codex** | OpenAI | 开源（Rust） | GPT-5-Codex/GPT-5 | OpenAI 官方编码 Agent，CLI/Cloud |
+| **OpenCode** | Anomaly | MIT | 多模型支持 | 开源 AI 编码 Agent，TUI/桌面应用/IDE 扩展 |
 
 ## 核心特性对比
 
 ### 模型支持
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
-| **多模型支持** | ✅ 任意 OpenAI 兼容 API | ❌ 仅 Claude | ❌ 仅 Gemini | ❌ 仅 OpenAI | ✅ 多模型 |
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
+| **多模型支持** | ✅ 任意 OpenAI 兼容 API | ❌ 仅 Claude | ❌ 仅 Gemini | ❌ 仅 OpenAI | ✅ 多提供商 |
 | **国产模型** | ✅ Qwen/DeepSeek 等 | ❌ | ❌ | ❌ | ✅ |
 | **本地模型** | ✅ Ollama 等 | ❌ | ❌ | ❌ | ✅ |
-| **免费额度** | 取决于模型提供商 | 有限 | 60 次/分钟，1000 次/天 | 取决于套餐 | 取决于模型提供商 |
+| **免费额度** | 取决于模型提供商 | 有限 | 60 次/分钟，1000 次/天 | Plus/Pro 套餐 | 取决于模型提供商 |
 | **上下文窗口** | 取决于模型 | 200K | 1M | 取决于模型 | 取决于模型 |
+| **企业部署** | ✅ 自托管 | ✅ AWS/GCP | ✅ Vertex AI | ✅ Business/Enterprise | ✅ 自托管 |
 
 **Blade Code 优势**：不绑定任何模型提供商，支持国产模型（Qwen、DeepSeek）和本地模型（Ollama），用户可根据成本和性能自由选择。
 
+**Claude Code 优势**：企业级安全、隐私和合规性内置，支持 AWS 和 GCP 托管。
+
+**Codex 优势**：深度集成 ChatGPT Plus/Pro/Business/Enterprise 套餐，支持云端任务执行。
+
 ### 工作模式
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
 | **Plan 模式** | ✅ 只读调研 | ✅ | ❌ | ❌ | ✅ |
 | **Spec 模式** | ✅ 六阶段工作流 | ❌ | ❌ | ❌ | ❌ |
-| **自动编辑模式** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **非交互模式** | ✅ `--print` | ✅ `-p` | ✅ `-p` | ✅ | ✅ |
-| **会话恢复** | ✅ `--resume` | ✅ | ✅ | ✅ | ✅ |
+| **自动编辑模式** | ✅ | ✅ | ✅ | ✅ TUI/exec | ✅ |
+| **非交互模式** | ✅ `--print` | ✅ `-p` | ✅ Headless | ✅ `exec` | ✅ `run` |
+| **会话恢复** | ✅ `--resume` | ✅ | ✅ Checkpoint | ✅ | ✅ |
+| **云端任务** | ❌ | ❌ | ❌ | ✅ Codex Cloud | ❌ |
+| **撤销/重做** | ❌ | ❌ | ❌ | ❌ | ✅ `/undo` `/redo` |
 
 **Blade Code 独有**：
 - **Spec 模式**：结构化的六阶段开发工作流（Init → Requirements → Design → Tasks → Implementation → Done），适合复杂功能开发
@@ -42,11 +49,12 @@
 
 ### 权限控制
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
-| **权限模式** | 4 种 | 3 种 | 有限 | 有限 | 2 种 |
-| **细粒度规则** | ✅ allow/ask/deny | ✅ | ❌ | ❌ | ❌ |
-| **工具级限制** | ✅ | ✅ | ❌ | ❌ | ❌ |
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
+| **权限模式** | 4 种 | 3 种 | Policy Engine | 可配置审批模式 | 有限 |
+| **细粒度规则** | ✅ allow/ask/deny | ✅ | ✅ Policy 控制 | ✅ | ❌ |
+| **工具级限制** | ✅ | ✅ | ✅ Trusted Folders | ✅ | ❌ |
+| **沙盒隔离** | ❌ | ❌ | ✅ | ❌ | ❌ |
 | **轮次上限** | ✅ 可配置 | ✅ | ❌ | ❌ | ❌ |
 | **危险命令拦截** | ✅ 内置黑名单 | ✅ | ✅ | ✅ | ✅ |
 
@@ -58,13 +66,15 @@
 
 ### 扩展能力
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
-| **MCP 支持** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Skills 系统** | ✅ 兼容 Claude | ✅ | ✅ 独立 Skills | ✅ 兼容 Claude | ❌ |
-| **Subagents** | ✅ 可定制 | ✅ | ❌ | ❌ | ✅ |
-| **Hooks 系统** | ✅ Pre/Post 钩子 | ✅ | ❌ | ❌ | ❌ |
-| **自定义 Slash 命令** | ✅ | ✅ | ❌ | ❌ | ❌ |
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
+| **MCP 支持** | ✅ | ✅ | ✅ OAuth 支持 | ✅ | ✅ OAuth 支持 |
+| **Skills 系统** | ✅ 兼容 Claude | ✅ | ✅ `SKILL.md` | ❌ | ❌ |
+| **Subagents** | ✅ 可定制 | ✅ | ❌ | ✅ Code Review | ✅ Custom Agents |
+| **Hooks 系统** | ✅ Pre/Post 钩子 | ✅ | ✅ Lifecycle Hooks | ❌ | ❌ |
+| **自定义命令** | ✅ Slash 命令 | ✅ Slash 命令 | ✅ Custom Commands | ❌ | ✅ |
+| **Extensions** | ✅ | ✅ | ✅ Framework | ❌ | ✅ Plugins |
+| **LSP 集成** | ❌ | ✅ | ❌ | ❌ | ✅ |
 
 **Blade Code 扩展特性**：
 - **Skills**：封装常用工作流为可复用模块，兼容 Claude Code Skills 格式
@@ -78,44 +88,52 @@
 | Blade Code | ✅ | 兼容 Claude Code Skills |
 | Claude Code | ✅ | 原生支持 |
 | Gemini CLI | ✅ | 独立 Skills 系统 (`SKILL.md`) |
-| Codex CLI | ✅ | 兼容 Claude Code Skills (`~/.codex/skills`) |
+| Codex | ❌ | 无 |
 | OpenCode | ❌ | 无 |
 
-Blade Code 和 Codex CLI 的 Skills 系统都兼容 Claude Code，可以直接使用 [Anthropic 官方 Skills 仓库](https://github.com/anthropics/skills)。Gemini CLI 也有类似的 Skills 机制，通过 `SKILL.md` 定义，但格式与 Claude Code 略有不同。
+Blade Code 的 Skills 系统兼容 Claude Code，可以直接使用 [Anthropic 官方 Skills 仓库](https://github.com/anthropics/skills)。Gemini CLI 也有类似的 Skills 机制，通过 `SKILL.md` 定义，但格式与 Claude Code 略有不同。
 
 ### IDE 集成
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
-| **ACP 协议** | ✅ | ❌ | ❌ | ❌ | ❌ |
-| **VS Code** | ✅ 通过 ACP | ✅ 官方插件 | ❌ | ✅ 官方插件 | ❌ |
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
+| **ACP 协议** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **VS Code** | ✅ 通过 ACP | ✅ 官方插件 | ✅ Companion Ext | ❌ | ✅ 通过 ACP |
 | **JetBrains** | ✅ 通过 ACP | ❌ | ❌ | ❌ | ❌ |
 | **Neovim** | ✅ 通过 ACP | ❌ | ❌ | ❌ | ❌ |
 | **Zed** | ✅ 通过 ACP | ❌ | ❌ | ❌ | ❌ |
+| **其他编辑器** | ✅ 通过 ACP | ❌ | ✅ Extension API | ❌ | ❌ |
 
 **Blade Code 优势**：通过 ACP（Agent Client Protocol）支持多种 IDE，一次配置多处使用。
 
 ### 内置工具
 
-| 工具类型 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|----------|------------|-------------|------------|-----------|----------|
+| 工具类型 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|----------|------------|-------------|------------|-------|----------|
 | **文件读写** | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **代码搜索** | ✅ Glob/Grep | ✅ | ✅ | ✅ | ✅ |
 | **Shell 执行** | ✅ 后台支持 | ✅ | ✅ | ✅ | ✅ |
-| **Web 搜索** | ✅ 多引擎聚合 | ✅ | ✅ Google | ❌ | ✅ |
-| **Web 抓取** | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **Web 搜索** | ✅ 多引擎聚合 | ✅ | ✅ | ✅ | ✅ |
+| **Web 抓取** | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **用户交互** | ✅ AskUserQuestion | ✅ | ❌ | ❌ | ❌ |
-| **TODO 管理** | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **TODO 管理** | ✅ | ✅ | ✅ | ❌ | ❌ |
+| **Memory 管理** | ❌ | ❌ | ✅ | ❌ | ❌ |
 | **Notebook 编辑** | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **截图/设计稿** | ❌ | ❌ | ❌ | ✅ | ❌ |
+| **GitHub 集成** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **使用统计** | ❌ | ❌ | ❌ | ❌ | ✅ Stats |
 
 ### 配置管理
 
-| 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
-|------|------------|-------------|------------|-----------|----------|
+| 特性 | Blade Code | Claude Code | Gemini CLI | Codex | OpenCode |
+|------|------------|-------------|------------|-------|----------|
 | **双文件配置** | ✅ config + settings | ✅ | ❌ | ❌ | ✅ |
 | **项目级配置** | ✅ `.blade/` | ✅ `.claude/` | ✅ `GEMINI.md` | ❌ | ✅ |
-| **环境变量插值** | ✅ `${VAR}` | ✅ | ✅ | ✅ | ✅ |
+| **环境变量配置** | ✅ `${VAR}` 插值 | ✅ `${VAR}` 插值 | ✅ | ✅ | ✅ JSON/ENV |
 | **配置向导** | ✅ 首次启动 | ❌ | ✅ | ✅ | ❌ |
+| **系统提示自定义** | ✅ | ✅ | ✅ Override | ✅ Agent Prompts | ✅ Agent Prompts |
+| **Token Caching** | ❌ | ✅ | ✅ | ❌ | ❌ |
+| **Telemetry 配置** | ❌ | ❌ | ✅ | ❌ | ❌ |
 | **settings.local.json** | ✅ 自动 gitignore | ✅ | ❌ | ❌ | ❌ |
 
 ## 安装方式对比
