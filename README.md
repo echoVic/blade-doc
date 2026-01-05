@@ -23,6 +23,7 @@
 - **[Hooks 系统](guides/hooks.md)** - 工具执行钩子
 - **[工具列表](reference/tool-list.md)** - 所有可用工具
 - **[CLI 命令](reference/cli-commands.md)** - 命令行参考
+- **[CLI Agent 对比](guides/comparison.md)** - 与 Claude Code、Gemini CLI、Codex、OpenCode 对比
 
 ## 💬 交流群
 

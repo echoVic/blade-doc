@@ -19,10 +19,12 @@
   * [ACP 集成](guides/acp.md)
   * [@ 文件提及](guides/at-file-mentions.md)
   * [Markdown 支持](guides/markdown-support.md)
+  * [CLI Agent 对比](guides/comparison.md)
 
 * 参考
   * [CLI 命令](reference/cli-commands.md)
   * [工具列表](reference/tool-list.md)
+  * [CLI Agent 对比](reference/comparison.md)
 
 * [常见问题](faq.md)
 
