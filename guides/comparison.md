@@ -22,7 +22,7 @@
 | **国产模型** | ✅ Qwen/DeepSeek 等 | ❌ | ❌ | ❌ | ✅ |
 | **本地模型** | ✅ Ollama 等 | ❌ | ❌ | ❌ | ✅ |
 | **免费额度** | 取决于模型提供商 | 有限 | 60 次/分钟，1000 次/天 | 取决于套餐 | 取决于模型提供商 |
-| **上下文窗口** | 取决于模型 | 200K | 1M | 128K | 取决于模型 |
+| **上下文窗口** | 取决于模型 | 200K | 1M | 取决于模型 | 取决于模型 |
 
 **Blade Code 优势**：不绑定任何模型提供商，支持国产模型（Qwen、DeepSeek）和本地模型（Ollama），用户可根据成本和性能自由选择。
 
@@ -61,7 +61,7 @@
 | 特性 | Blade Code | Claude Code | Gemini CLI | Codex CLI | OpenCode |
 |------|------------|-------------|------------|-----------|----------|
 | **MCP 支持** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Skills 系统** | ✅ 兼容 Claude | ✅ | ❌ | ✅ 兼容 Claude | ❌ |
+| **Skills 系统** | ✅ 兼容 Claude | ✅ | ✅ 独立 Skills | ✅ 兼容 Claude | ❌ |
 | **Subagents** | ✅ 可定制 | ✅ | ❌ | ❌ | ✅ |
 | **Hooks 系统** | ✅ Pre/Post 钩子 | ✅ | ❌ | ❌ | ❌ |
 | **自定义 Slash 命令** | ✅ | ✅ | ❌ | ❌ | ❌ |
@@ -77,11 +77,11 @@
 |------|------|--------|
 | Blade Code | ✅ | 兼容 Claude Code Skills |
 | Claude Code | ✅ | 原生支持 |
-| Gemini CLI | ❌ | 无（使用 GEMINI.md 自定义上下文） |
-| Codex CLI | ✅ | 兼容 Claude Code Skills（`~/.codex/skills`） |
+| Gemini CLI | ✅ | 独立 Skills 系统 (`SKILL.md`) |
+| Codex CLI | ✅ | 兼容 Claude Code Skills (`~/.codex/skills`) |
 | OpenCode | ❌ | 无 |
 
-Blade Code 和 Codex CLI 的 Skills 系统都兼容 Claude Code，可以直接使用 [Anthropic 官方 Skills 仓库](https://github.com/anthropics/skills)。Gemini CLI 使用 `GEMINI.md` 文件提供项目特定的上下文。
+Blade Code 和 Codex CLI 的 Skills 系统都兼容 Claude Code，可以直接使用 [Anthropic 官方 Skills 仓库](https://github.com/anthropics/skills)。Gemini CLI 也有类似的 Skills 机制，通过 `SKILL.md` 定义，但格式与 Claude Code 略有不同。
 
 ### IDE 集成
 
@@ -200,22 +200,6 @@ curl -fsSL https://opencode.ai/install | bash
 - 偏好 TUI 界面
 - 需要桌面应用
 - 希望使用完全开源方案
-
-## 迁移指南
-
-### 从 Claude Code 迁移到 Blade Code
-
-1. **配置文件**：Blade 兼容 `.claude/` 目录结构，可直接复用
-2. **Skills**：将 `.claude/skills/` 复制到 `.blade/skills/` 或保持原位
-3. **权限规则**：`settings.json` 格式基本兼容，可能需要微调
-4. **模型配置**：在 `config.json` 中添加你的模型配置
-
-### 从其他工具迁移
-
-1. 安装 Blade Code：`npm install -g blade-code`
-2. 首次启动：`blade`，按向导配置模型
-3. 可选：创建 `.blade/settings.json` 配置权限规则
-4. 可选：创建 Skills 和 Subagents 扩展能力
 
 ## 参考资源
 
