@@ -40,6 +40,7 @@
 | 名称 | 类型 | 说明 |
 | --- | --- | --- |
 | `Task` | ReadOnly | 启动子 Agent（使用 `.blade/agents` / `~/.blade/agents` 中的配置），`subagent_type` 决定工具集。 |
+| `TaskOutput` | ReadOnly | 获取后台任务输出，支持后台 Shell（`bash_xxx`）和后台 Agent（`agent_xxx`），可阻塞等待完成或立即返回当前状态。 |
 | `TodoWrite` | ReadOnly | 管理会话内 TODO（持久化到 `<configDir>/todos/<session>-agent-<session>.json`，默认 `~/.blade/todos`），返回完整列表。 |
 | `EnterPlanMode` / `ExitPlanMode` | ReadOnly | 进入/退出 Plan 模式并触发用户确认。 |
 
