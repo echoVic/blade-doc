@@ -27,8 +27,12 @@ Explore 代理支持三种彻底程度级别：
 `SubagentRegistry` 按以下顺序加载（后加载的会覆盖前面的）：
 
 1. 内置配置（`builtinAgents.ts`）
-2. `~/.blade/agents/*.md`（用户级，可覆盖内置）
-3. `<project>/.blade/agents/*.md`（项目级，优先级最高）
+2. `~/.claude/agents/*.md`（Claude Code 用户级配置）
+3. `<project>/.claude/agents/*.md`（Claude Code 项目级配置）
+4. `~/.blade/agents/*.md`（Blade 用户级，可覆盖内置）
+5. `<project>/.blade/agents/*.md`（Blade 项目级，优先级最高）
+
+> **Claude Code 兼容**：Blade 可直接读取 Claude Code 的 subagent 配置，无需迁移。Blade 配置优先级高于 Claude Code 配置。
 
 每个文件需包含 YAML frontmatter 与正文，frontmatter 描述元数据，正文作为系统提示词。
 
@@ -41,6 +45,7 @@ tools:
   - Grep
   - Glob
 color: blue   # 可选：red/blue/green/yellow/purple/orange/pink/cyan
+permissionMode: default  # 可选：default/acceptEdits/dontAsk/bypassPermissions/plan
 ---
 
 # 这里是系统提示词
@@ -49,9 +54,22 @@ color: blue   # 可选：red/blue/green/yellow/purple/orange/pink/cyan
 
 字段说明：
 - `name`：唯一标识（kebab-case）。
-- `description`：简要用途，建议包含 “Use this when …” 场景。
-- `tools`：允许的工具列表，留空则不做限制。
+- `description`：简要用途，建议包含 "Use this when …" 场景。
+- `tools`：允许的工具列表，支持数组或逗号分隔字符串（如 `"Read, Grep, Glob"`），留空则不做限制。
 - `color`：UI 标记颜色（可选）。
+- `model`：指定模型（可选），支持 `sonnet`/`opus`/`haiku`/`inherit` 或具体模型名。
+- `permissionMode`：权限模式（可选），支持 Claude Code 格式。
+- `skills`：自动加载的 skills 列表（可选）。
+
+**permissionMode 映射**（Claude Code → Blade）：
+
+| Claude Code | Blade | 说明 |
+| --- | --- | --- |
+| `default` | DEFAULT | 默认模式 |
+| `acceptEdits` | AUTO_EDIT | 自动接受编辑 |
+| `dontAsk` | YOLO | 不询问直接执行 |
+| `bypassPermissions` | YOLO | 绕过权限检查 |
+| `plan` | PLAN | 计划模式 |
 
 ## 使用方式
 

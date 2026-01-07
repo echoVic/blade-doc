@@ -43,6 +43,9 @@ A: 使用镜像源：`npm install -g blade-code --registry=https://registry.npmm
 
 ## 其他
 
+**Q: 能否使用 Claude Code 的配置？**  
+A: 可以。Blade 兼容 Claude Code 的配置格式，会自动读取 `~/.claude/agents/` 和 `.claude/agents/` 目录下的 subagent 配置，以及 `~/.claude/skills/` 和 `.claude/skills/` 目录下的 skills。Blade 目录的配置优先级高于 Claude Code 目录。
+
 **Q: 权限模式如何工作？**  
 A: `default`：只读工具自动通过；`autoEdit`：额外放行写入；`plan`：拒绝所有修改，仅允许只读；`spec`：规格驱动开发模式，支持结构化的需求分析和任务管理；`yolo`：全部放行。详情见权限章节。
 
