@@ -27,7 +27,8 @@
 
 ## 💬 交流群
 
-添加小助手微信 **VIc-Forever**，备注「Blade」拉你进群。
+- [Discord 社区](https://discord.gg/utXDVcv6) - 加入我们的 Discord 服务器
+- 微信群：添加小助手微信 **VIc-Forever**，备注「Blade」拉你进群
 
 ## 🔗 相关资源
 

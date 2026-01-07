@@ -13,6 +13,7 @@
 - 🔗 支持 MCP 协议扩展
 
 [GitHub](https://github.com/echoVic/blade-code)
+[Discord](https://discord.gg/utXDVcv6)
 [快速开始](getting-started/quick-start.md)
 
 <!-- 背景色 -->

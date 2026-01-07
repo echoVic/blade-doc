@@ -32,3 +32,4 @@
 
 * 其他
   * [GitHub](https://github.com/echoVic/blade-code)
+  * [Discord 社区](https://discord.gg/utXDVcv6)
