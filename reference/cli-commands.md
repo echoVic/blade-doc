@@ -27,8 +27,6 @@ blade "帮我创建一个 README"
 | `--max-turns <n>` | 控制对话轮次（0 = 禁用对话，-1 = 无限但受安全上限 100 轮保护，N > 0 = 限制轮次）。 |
 | `--system-prompt <text>` | 替换默认系统提示词。 |
 | `--append-system-prompt <text>` | 追加到默认系统提示词。 |
-| `--model <id>` | 当前会话使用的模型 ID。 |
-| `--fallback-model <id>` | 指定备用模型（当前仅解析参数，尚未接入自动切换）。 |
 
 **输出与输入选项**
 
@@ -75,6 +73,12 @@ blade "帮我创建一个 README"
 | --- | --- |
 | `--acp` | 以 ACP（Agent Client Protocol）模式运行，用于 IDE 集成。 |
 | `--ide` | 启动时自动连接 IDE（当前仅解析参数，未自动连接）。 |
+
+**插件选项**
+
+| 参数 | 作用 |
+| --- | --- |
+| `--plugin-dir <path>` | 从指定目录加载插件（优先级最高）。 |
 
 ## 🖨️ 打印模式 `-p / --print`
 

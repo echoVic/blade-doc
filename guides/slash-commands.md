@@ -23,6 +23,7 @@ Slash 命令由 `src/slash-commands` 提供，输入 `/` 触发建议，`Tab` �
 | `/tasks [clean]` | 列出所有后台任务（shells 和 agents） | 显示后台 shell 和 agent 的运行状态；`clean` 清理已完成的会话。 |
 | `/skills` | 打开 Skills 管理面板 | 查看和管理所有可用 Skills。 |
 | `/skill-creator` | 交互式创建新 Skill | 引导用户生成 SKILL.md。 |
+| `/plugins [list|info|install|...]` | 管理插件系统 | 安装、卸载、启用、禁用插件。 |
 | `/git [status|log|diff|review|commit]` | Git 操作集成。`commit` (或 pre-commit) 会分析暂存区变动，调用 AI 生成符合历史风格的 commit message。 | 需在 Git 仓库中使用。 |
 
 ## 自定义 Slash 命令
@@ -92,6 +93,9 @@ argument-hint: "[参数提示]"
 /resume                   # 选择历史会话
 /tasks                    # 查看后台任务（shells 和 agents）
 /tasks clean              # 清理已完成的后台任务
+/plugins                  # 打开插件管理界面
+/plugins list             # 列出所有已加载的插件
+/plugins install user/repo # 从 GitHub 安装插件
 ```
 
 ## 注意事项

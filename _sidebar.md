@@ -16,6 +16,7 @@
   * [Spec 模式](guides/spec-mode.md)
   * [Skills 系统](guides/skills.md)
   * [Hooks 系统](guides/hooks.md)
+  * [插件系统](guides/plugins.md)
   * [ACP 集成](guides/acp.md)
   * [@ 文件提及](guides/at-file-mentions.md)
   * [Markdown 支持](guides/markdown-support.md)
