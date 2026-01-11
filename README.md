@@ -1,6 +1,6 @@
 # 🗡️ Blade Code 用户文档
 
-欢迎使用 Blade Code！这是一个现代化的 AI 命令行工具，支持智能对话、工具调用、权限管理等功能。默认执行 `blade` 即可进入交互式界面；如果未检测到模型配置，会自动启动终端向导（填写 Provider / Base URL / API Key / 模型）。
+欢迎使用 Blade Code！这是一个现代化的 AI 命令行工具，支持智能对话、工具调用、权限管理等功能。默认执行 `blade` 即可进入交互式界面；从 0.1.0 起，内置免费模型（GLM-4.7）可让你无需配置也能直接开始对话，随后可用 `/model add` 添加自有模型。
 
 ## 🚀 快速开始
 
@@ -10,7 +10,7 @@
 
 ## ⚙️ 配置
 
-- **[配置系统](configuration/config-system.md)** - 双文件配置系统完整指南（含首次启动设置向导）
+- **[配置系统](configuration/config-system.md)** - 双文件配置系统完整指南（含内置模型与手工配置）
 - **[权限控制](configuration/permissions.md)** - 三级权限控制详解
 - **[主题配置](configuration/themes.md)** - 主题配置和自定义
 
@@ -35,5 +35,4 @@
 - [GitHub 仓库](https://github.com/echoVic/blade-code)
 - [NPM 包](https://www.npmjs.com/package/blade-code)
 - [问题反馈](https://github.com/echoVic/blade-doc/issues)
-
 

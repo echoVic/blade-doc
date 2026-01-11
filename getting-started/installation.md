@@ -27,7 +27,9 @@ npx blade "帮我分析代码"
 
 ## 🔐 配置模型与密钥
 
-首次运行 `blade` 如未检测到模型配置，会自动弹出模型配置向导（`ModelConfigWizard`），依次填写：
+从 0.1.0 起，Blade 内置免费模型（GLM-4.7），默认无需配置即可开始使用。
+
+如需使用自有模型或私有网关，可输入 `/model add` 打开模型配置向导（`ModelConfigWizard`），依次填写：
 1. 配置名称
 2. Provider（`openai-compatible` / `anthropic` / `gemini` / `antigravity` / `copilot` / `azure-openai` / `gpt-openai-platform`）
 3. Base URL（部分 Provider 可选）

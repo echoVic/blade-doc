@@ -9,7 +9,7 @@ blade          # 交互式界面
 npx blade-code # 零安装体验
 ```
 
-> 未检测到模型配置时，会自动进入模型配置向导；也可随时输入 `/model add`。
+> 从 0.1.0 起，Blade 内置免费模型（GLM-4.7），无需任何配置即可直接开始对话；如需使用自有模型，随时输入 `/model add`。
 
 ### 2）提问
 
@@ -37,7 +37,7 @@ blade mcp list              # 查看 MCP 配置
 
 ## 模型与密钥配置
 
-- **向导**：首次启动或输入 `/model add`。
+- **向导**：输入 `/model add` 打开模型配置向导，添加你的 API Key / Base URL 等配置。
 - **手工**：编辑 `~/.blade/config.json` / `.blade/config.json`，模型结构见配置章节，密钥可用 `${ENV}` 插值。
 
 ## 验证

@@ -3,7 +3,7 @@
 ## 入门
 
 **Q: 如何开始使用？**  
-A: 安装后运行 `blade`。若未配置模型，会自动进入模型配置向导；也可先用 `npx blade-code` 体验。
+A: 安装后运行 `blade`。从 0.1.0 起默认可直接使用内置免费模型；如需使用自有模型，输入 `/model add` 添加配置。也可先用 `npx blade-code` 体验。
 
 **Q: 提示 `command not found: blade`？**  
 A: 确认全局安装路径在 `PATH` 中，例如：
@@ -16,7 +16,7 @@ export PATH="$(npm config get prefix)/bin:$PATH"
 
 **Q: API Key/模型怎么配？**  
 A: 两种方式：
-1) 运行 `blade`，按向导填写 Provider / Base URL / API Key / 模型。  
+1) 输入 `/model add`，按向导填写 Provider / Base URL / API Key / 模型。  
 2) 手动编辑 `~/.blade/config.json`（或项目级 `.blade/config.json`），把密钥放在环境变量后用 `${VAR}` 引用。
 
 **Q: 有哪些 CLI 选项可以用？**  
@@ -53,4 +53,4 @@ A: `default`：只读工具自动通过；`autoEdit`：额外放行写入；`pla
 A: Plan 模式适合简单任务的调研和方案制定，只允许只读工具。Spec 模式适合复杂功能开发，提供六阶段工作流（init → requirements → design → tasks → implementation → done），支持结构化文档和任务追踪。详情见 [Plan 模式](guides/plan-mode.md) 和 [Spec 模式](guides/spec-mode.md)。
 
 **Q: 配置文件没写完或格式错误怎么办？**  
-A: 未找到有效模型会触发向导；解析失败会在对话区提示错误。修正 JSON 后重启即可。
+A: 解析失败会在对话区提示错误。修正 JSON 后重启即可；你也可以用内置免费模型先继续对话，再回头修配置。

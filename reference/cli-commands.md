@@ -12,7 +12,7 @@ blade
 blade "帮我创建一个 README"
 ```
 
-- 无子命令时启动 Ink 界面。若未配置模型，会自动进入「模型配置向导」（`ModelConfigWizard`）。
+- 无子命令时启动 Ink 界面。从 0.1.0 起即使未配置模型也可直接使用内置免费模型；如需添加自有模型，可输入 `/model add` 打开「模型配置向导」（`ModelConfigWizard`）。
 - 传入的 `message` 会在 UI 初始化后直接提交，无需手动回车。
 
 **常用参数**

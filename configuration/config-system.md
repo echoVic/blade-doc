@@ -23,6 +23,15 @@ Blade 使用双文件配置体系：`config.json`（基础配置）和 `settings
 
 Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gemini、Azure OpenAI，以及 OAuth 方式的 Antigravity/Copilot。
 
+### 内置免费模型（0.1.0+）
+
+从 0.1.0 起，Blade 会在启动时把一个“内置免费模型”注入到模型列表中（默认使用智谱 GLM-4.7），并在你未设置 `currentModelId` 时自动选中它。
+
+- 内置模型会出现在 UI 的模型选择器里，但不一定会写入你的 `config.json`（除非你手动保存配置）
+- 你仍然可以通过 `/model add` 添加自有模型，并随时切换
+
+> 内置模型用于开箱即用体验：不需要你提供 API Key。它的 `apiKey` 在内部使用固定标记值（例如 `blade-free-tier`），用于区分“内置免费额度”和用户自配密钥。
+
 **支持的 Provider**
 
 - `openai-compatible`: OpenAI 兼容接口（DeepSeek, Ollama, Qwen 等）
@@ -99,6 +108,13 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
 | `mcpServers` | MCP 服务器配置字典 | `{}` |
 
 > `fallbackModel`、`allowedTools`、`settingSources` 等字段仅存在于运行时类型中，当前未接入主要流程。
+
+### Token 用量统计（0.0.48+）
+
+从 0.0.48 起，Blade 在流式响应中也会尽量收集各提供商返回的 `usage` 信息，并用于：
+
+- 更准确地计算“上下文剩余比例”（状态栏的百分比）
+- 更可靠地触发自动压缩（优先使用真实 Token 数据而非估算）
 
 ## settings.json / settings.local.json（行为配置）
 
@@ -189,7 +205,7 @@ Blade 支持多种模型提供商，包括 OpenAI 兼容接口、Anthropic、Gem
 
 ## 配置入口
 
-- **首次启动**：若未检测到模型，UI 会自动进入模型配置向导；也可在任何时候输入 `/model add` 打开向导。
+- **首次启动**：从 0.1.0 起可直接使用内置免费模型开始对话；如需自定义模型，输入 `/model add` 打开配置向导。
 - **手工编辑**：直接修改上述文件即可，保存后下次启动生效。
 - **自动写入**：在权限确认弹窗中选择“会话内记住”会把抽象后的规则写入 `.blade/settings.local.json`。
 
